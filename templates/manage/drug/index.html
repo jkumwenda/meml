@@ -1,0 +1,81 @@
+{% extends 'shared/logged.html' %} {% load static %} {% block page_content %}
+<div class="col btn-col">
+  <a href="{% url 'add_drug' %}" class="btn-add">Add Drug</a>
+</div>
+<div class="col">
+  {% for msg in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy!</strong> {{msg}}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% if drugs %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Drug</th>
+        <th scope="col">Drug Class</th>
+        <th scope="col">Manufacturer</th>
+        <th scope="col" width="100">Controls</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for drug in drugs %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{drug.drug_name}}</td>
+        <td>{{drug.drug_class}}</td>
+        <td>{{drug.manufacturer}}</td>
+        <td class="controls">
+          <div class="btn-group btn-xs">
+            <button
+              type="button"
+              class="btn btn-secondary dropdown-toggle btn-sm"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Options
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a
+                  href="{% url 'view_drug' drug.drug_id %}"
+                  class="dropdown-item"
+                  type="button"
+                  >View</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'edit_drug' drug.drug_id %}"
+                  class="dropdown-item"
+                  type="button"
+                  >Edit</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'delete_drug' drug.drug_id %}"
+                  class="dropdown-item"
+                  type="button"
+                  >Delete</a
+                >
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-warning">No Data</div>
+  {% endif %}
+</div>
+
+{% endblock %}

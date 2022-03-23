@@ -1,0 +1,69 @@
+{% extends 'shared/logged.html' %} {% load static %} {% block page_content %}
+<div class="col btn-col">
+  <a href="{% url 'add_drug_class' %}" class="btn-add">Add Drug Class</a>
+</div>
+<div class="col">
+  {% for msg in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy!</strong> {{msg}}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %}{% if drug_classes %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Drug Class</th>
+        <th scope="col" width="100">Controls</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for drug_class in drug_classes %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{drug_class.drug_class}}</td>
+        <td class="controls">
+          <div class="btn-group btn-xs">
+            <button
+              type="button"
+              class="btn btn-secondary dropdown-toggle btn-sm"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Options
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a
+                  href="{% url 'edit_drug_class' drug_class.drug_class_id %}"
+                  class="dropdown-item"
+                  type="button"
+                  >Edit</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'delete_drug_class' drug_class.drug_class_id %}"
+                  class="dropdown-item"
+                  type="button"
+                  >Delete</a
+                >
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-warning">No Data</div>
+  {% endif %}
+</div>
+
+{% endblock %}

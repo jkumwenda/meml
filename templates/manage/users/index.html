@@ -1,0 +1,73 @@
+{% extends 'shared/logged.html' %} {% load static %} {% block page_content %}
+<div class="col btn-col">
+  <a href="{% url 'add_user' %}" class="btn-add">Add User</a>
+</div>
+<div class="col">
+  {% for msg in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy!</strong> {{msg}}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% if users %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col" width="100">Controls</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{user.username}}</td>
+        <td>{{user.first_name}}</td>
+        <td>{{user.last_name}}</td>
+        <td class="controls">
+          <div class="btn-group btn-xs">
+            <button
+              type="button"
+              class="btn btn-secondary dropdown-toggle btn-sm"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Options
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a
+                  href="{% url 'edit_user' user.id %}"
+                  class="dropdown-item"
+                  type="button"
+                  >Edit</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'delete_user' user.id %}"
+                  class="dropdown-item"
+                  type="button"
+                  >Delete</a
+                >
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-warning">No Data</div>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends 'shared/main.html' %} {% block content %}
+<div class="row search-form-row">
+  <div class="col col-lg-6 offset-lg-3">{% include 'shared/logo.html' %}</div>
+  <div class="col col-lg-6 offset-lg-3">
+    <form action="" method="post" class="">
+      <div class="col col-form">
+        {% csrf_token %} {{form.as_p}}
+        <button type="submit" class="btn btn-results btn-primary btn-lg">
+          Find Results
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col col-lg-8 offset-lg-2 search-content">
+    {% if drug %}
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card text-dark bg-light drug-card">
+          <h5 class="card-header reaction-title">Drug Details</h5>
+          <div class="card-body drug-info">
+            <strong>Drug name </strong>
+            <p>&nbsp; : &nbsp;{{drug.drug_name}}</p>
+            <strong>Drug Class </strong>
+            <p>&nbsp; : &nbsp;{{drug.drug_class}}</p>
+            <strong>Dosage </strong>
+            <p>&nbsp; : &nbsp;{{drug.dosage}}</p>
+            <strong>Manufacturer </strong>
+            <p>&nbsp; : &nbsp;{{drug.manufacturer}}</p>
+            <strong>Date recorded </strong>
+            <p>&nbsp; : &nbsp;{{drug.created_at}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 adr-title">
+        <h4>Adverse Reactions</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="accordion" id="accordionFlushExample">
+          {% if drug_reactions %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne"
+                aria-expanded="false"
+                aria-controls="flush-collapseOne"
+              >
+                <strong>Drug Reaction</strong>
+              </button>
+            </h2>
+            <div
+              id="flush-collapseOne"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingOne"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                <table class="table table-borderless table-light table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Reaction</th>
+                      <th scope="col" width="220">Last updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for drug_reaction in drug_reactions%}
+                    <tr>
+                      <td>{{drug_reaction.drug_reaction}}</td>
+                      <td>{{drug_reaction.updated_at}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endif %} {% if drug_interactions %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseTwo"
+                aria-expanded="false"
+                aria-controls="flush-collapseTwo"
+              >
+                <strong>Drug Interaction Reaction</strong>
+              </button>
+            </h2>
+            <div
+              id="flush-collapseTwo"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingTwo"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                <table class="table table-borderless table-light table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Drug</th>
+                      <th scope="col">Reaction</th>
+                      <th scope="col" width="220">Last updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for drug_interaction in drug_interactions%}
+                    <tr>
+                      <td>{{drug_interaction.drug_two.drug_name}}</td>
+                      <td>{{drug_interaction.drug_reaction}}</td>
+                      <td>{{drug_interaction.updated_at}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endif %} {% if drug_food_reactions %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingFour">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseFour"
+                aria-expanded="false"
+                aria-controls="flush-collapseFour"
+              >
+                <strong>Drug Food Reaction</strong>
+              </button>
+            </h2>
+            <div
+              id="flush-collapseFour"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingFour"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                <table class="table table-borderless table-light table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Food</th>
+                      <th scope="col">Reaction</th>
+                      <th scope="col" width="220">Last updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for drug_food_reaction in drug_food_reactions %}
+                    <tr>
+                      <td>{{drug_food_reaction.food.food}}</td>
+                      <td>{{drug_food_reaction.drug_food_reaction}}</td>
+                      <td>{{drug_food_reaction.updated_at}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endif %}{% if drug_contraindications %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseThree"
+                aria-expanded="false"
+                aria-controls="flush-collapseThree"
+              >
+                <strong>Drug Contraindication</strong>
+              </button>
+            </h2>
+            <div
+              id="flush-collapseThree"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingThree"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                <table class="table table-borderless table-light table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Contraindication</th>
+                      <th scope="col" width="220">Last updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for drug_contraindication in drug_contraindications%}
+                    <tr>
+                      <td>{{drug_contraindication.drug_contraindication}}</td>
+                      <td>{{drug_contraindication.updated_at}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

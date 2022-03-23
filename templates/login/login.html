@@ -1,0 +1,35 @@
+{% extends 'shared/main.html' %} {% load static %} {% block content %}
+<div class="row search-form-row">
+  <div class="col col-lg-12">
+    <div class="col col-lg-6 offset-lg-3">
+      <a href="{% url 'home' %}">
+        <img
+          class="center-block"
+          width="350px"
+          src="{% static 'images/logo.png' %}"
+        />
+      </a>
+    </div>
+  </div>
+  <div class="col col-lg-4 offset-lg-4 search-content">
+    {% for msg in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Holy!</strong> {{msg}}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endfor %}
+    <form class="form" action="" method="post">
+      {% csrf_token %} {{form.as_p}}
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

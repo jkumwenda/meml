@@ -1,0 +1,335 @@
+{% extends 'shared/logged.html' %} {% load static %} {% block page_content %}
+<div class="col">
+  {% for msg in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy!</strong> {{msg}}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %}
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="card card-stats">
+        <h5 class="card-header card-stat-header">Drug Details</h5>
+        <div class="card-body drug-info">
+          <strong>Drug name </strong>
+          <p>&nbsp; : &nbsp;{{drug.drug_name}}</p>
+          <strong>Drug Class </strong>
+          <p>&nbsp; : &nbsp;{{drug.drug_class}}</p>
+          <strong>Dosage </strong>
+          <p>&nbsp; : &nbsp;{{drug.dosage}}</p>
+          <strong>Manufacturer </strong>
+          <p>&nbsp; : &nbsp;{{drug.manufacturer}}</p>
+          <strong>Date recorded </strong>
+          <p>&nbsp; : &nbsp;{{drug.created_at}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="card card-stats">
+        <h5 class="card-header card-stat-header">Drug Access Statistics</h5>
+        <div class="card-body drug-info">
+          <strong>Daily views </strong>
+          <p>
+            &nbsp; &nbsp;<span class="badge rounded-pill bg-info text-dark"
+              >{{ hits.day.count }}</span
+            >
+          </p>
+          <strong>Weekly views </strong>
+          <p>
+            &nbsp; &nbsp;<span class="badge rounded-pill bg-info text-dark"
+              >{{ hits.week.count }}</span
+            >
+          </p>
+          <strong>Monthly views </strong>
+          <p>
+            &nbsp; &nbsp;<span class="badge rounded-pill bg-info text-dark"
+              >{{ hits.month.count }}</span
+            >
+          </p>
+          <strong>Yearly views </strong>
+          <p>
+            &nbsp; &nbsp;<span class="badge rounded-pill bg-info text-dark"
+              >{{ hits.year.count }}</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 adr-title">
+      <h4>Adverse Reactions</h4>
+    </div>
+  </div>
+
+  <div class="row adr">
+    <div class="col col-lg-6">
+      <div class="card adr-card">
+        <div class="card-header">
+          <span class="reaction-title">Drug Reaction</span>
+          <a
+            href="{% url 'add_drug_reaction' drug.drug_id %}"
+            class="btn-add-reaction"
+            title="Add drug reaction"
+            >+</a
+          >
+        </div>
+        <div class="card-body">
+          {% if drug_reactions %}
+          <table class="table table-bordered table-primary">
+            <thead>
+              <tr>
+                <th scope="col">Reaction</th>
+                <th scope="col" width="50">Control</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for drug_reaction in drug_reactions %}
+              <tr>
+                <td>{{drug_reaction.drug_reaction}}</td>
+                <td>
+                  <div class="btn-group btn-xs">
+                    <button
+                      type="button"
+                      class="btn btn-secondary dropdown-toggle btn-sm"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Options
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <a
+                          href="{% url 'edit_drug_reaction' drug_reaction.drug_reaction_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Edit</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="{% url 'delete_drug_reaction' drug_reaction.drug_reaction_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Delete</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div class="alert alert-warning">No Data</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col col-lg-6 col-sm-12">
+      <div class="card adr-card">
+        <div class="card-header">
+          <span class="reaction-title">Drug Interaction</span>
+          <a
+            href="{% url 'add_drug_interaction' drug.drug_id %}"
+            class="btn-add-reaction"
+            title="Add drug reaction"
+            >+</a
+          >
+        </div>
+        <div class="card-body">
+          {% if drug_interactions %}
+          <table class="table table-bordered table-primary">
+            <thead>
+              <tr>
+                <th scope="col">Drug</th>
+                <th scope="col">Reaction</th>
+                <th scope="col" width="50">Control</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for drug_interaction in drug_interactions %}
+              <tr>
+                <td>{{drug_interaction.drug_two}}</td>
+                <td>{{drug_interaction.drug_reaction}}</td>
+                <td>
+                  <div class="btn-group btn-xs">
+                    <button
+                      type="button"
+                      class="btn btn-secondary dropdown-toggle btn-sm"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Options
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <a
+                          href="{% url 'edit_drug_interaction' drug_interaction.drug_interaction_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Edit</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="{% url 'delete_drug_interaction' drug_interaction.drug_interaction_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Delete</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div class="alert alert-warning">No Data</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col col-lg-6">
+      <div class="card adr-card">
+        <div class="card-header">
+          <span class="reaction-title">Drug Food reaction</span>
+          <a
+            href="{% url 'add_drug_food_reaction' drug.drug_id %}"
+            class="btn-add-reaction"
+            title="Add drug reaction"
+            >+</a
+          >
+        </div>
+        <div class="card-body">
+          {% if drug_food_reactions %}
+          <table class="table table-bordered table-primary">
+            <thead>
+              <tr>
+                <th scope="col">Food</th>
+                <th scope="col">Reaction</th>
+                <th scope="col" width="50">Control</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for drug_food_reaction in drug_food_reactions %}
+              <tr>
+                <td>{{drug_food_reaction.food}}</td>
+                <td>{{drug_food_reaction.drug_food_reaction}}</td>
+                <td>
+                  <div class="btn-group btn-xs">
+                    <button
+                      type="button"
+                      class="btn btn-secondary dropdown-toggle btn-sm"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Options
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <a
+                          href="{% url 'edit_drug_food_reaction' drug_food_reaction.drug_food_reaction_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Edit</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="{% url 'delete_drug_food_reaction' drug_food_reaction.drug_food_reaction_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Delete</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div class="alert alert-warning">No Data</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col col-lg-6">
+      <div class="card adr-card">
+        <div class="card-header">
+          <span class="reaction-title">Drug Contraindication</span>
+          <a
+            href="{% url 'add_drug_contraindication' drug.drug_id %}"
+            class="btn-add-reaction"
+            title="Add drug reaction"
+            >+</a
+          >
+        </div>
+        <div class="card-body">
+          {% if drug_contraindications %}
+          <table class="table table-bordered table-primary">
+            <thead>
+              <tr>
+                <th scope="col">Reaction</th>
+                <th scope="col" width="50">Control</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for drug_contraindication in drug_contraindications %}
+              <tr>
+                <td>{{drug_contraindication.drug_contraindication}}</td>
+                <td>
+                  <div class="btn-group btn-xs">
+                    <button
+                      type="button"
+                      class="btn btn-secondary dropdown-toggle btn-sm"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Options
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <a
+                          href="{% url 'edit_drug_contraindication' drug_contraindication.drug_contraindication_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Edit</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="{% url 'delete_drug_contraindication' drug_contraindication.drug_contraindication_id %}"
+                          class="dropdown-item"
+                          type="button"
+                          >Delete</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div class="alert alert-warning">No Data</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

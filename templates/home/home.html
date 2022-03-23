@@ -1,0 +1,52 @@
+{% extends 'shared/main.html' %} {% block content %}
+<div class="row search-form-row">
+  <div class="col col-lg-6 offset-lg-3">{% include 'shared/logo.html' %}</div>
+  <div class="col col-lg-6 offset-lg-3">
+    <form action="" method="post" class="">
+      <div class="col col-form">
+        {% csrf_token %} {{form.as_p}}
+        <button type="submit" class="btn btn-results btn-primary btn-lg">
+          Find Results
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col col-lg-8 offset-lg-2 search_content">
+    {% if drugs %}
+    <table class="table table-striped">
+      <tbody>
+        {% for drug in drugs %}
+        <tr class="search-results">
+          <td>
+            <a href="{% url 'drug_detail' drug.drug_id %}"
+              ><strong>{{ drug.drug_name }}</strong></a
+            >
+          </td>
+          <td>
+            <a href="{% url 'drug_detail' drug.drug_id %}"
+              >{{ drug.drug_class }}</a
+            >
+          </td>
+          <td>
+            <a href="{% url 'drug_detail' drug.drug_id %}"
+              >{{ drug.manufacturer }}</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %} {% for msg in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Holy!</strong> {{msg}}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+{% endblock %}

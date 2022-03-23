@@ -1,0 +1,10 @@
+{% extends 'shared/main.html' %} {% block content %}
+<div class="row content-row">
+{% include 'shared/sidebar.html' %}
+    <div class="col-lg-9 col-page-content">
+      <div class="col page-title">{{ page_title }}</div>
+      <div class="col">{% block page_content %} {% endblock %}</div>
+    </div>
+  </div>
+  {% endblock %}
+</div>

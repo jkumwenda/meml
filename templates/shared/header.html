@@ -1,0 +1,23 @@
+<div class="col header">
+  {% if user.is_authenticated %}
+  <div class="btn-group">
+    <a
+      href="#"
+      class="user_logged_link dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      {{request.user.username}}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <a href="{% url 'logout' %}" class="dropdown-item" type="button"
+          >Logout</a
+        >
+      </li>
+    </ul>
+  </div>
+  {% else %}
+  <a href="{% url 'login' %}" class="btn btn-login float-right">Sign In</a>
+  {% endif %}
+</div>

@@ -1,0 +1,48 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.main-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main-container {
+  height: 100%;
+}
+
+.search-form-row {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content-row {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  height: 100%;
+}
+
+.side-memu {
+}
+
+.footer {
+  padding: 15px;
+  background-color: #2a2e7c;
+  color: #9aa7af;
+}
+
+.search {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  background-color: #2a2e7c;
+}

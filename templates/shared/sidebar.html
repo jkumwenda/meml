@@ -1,0 +1,17 @@
+{% load static %}
+<div class="col-lg-3 sidebar">
+  <a href="{% url 'dashboard' %}">
+  <img
+    class="center-block img-fluid"
+    width="200px"
+    src="{% static 'images/logo.png' %}"
+  />
+</a>
+  <ul class="navbar">
+      <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li><a href="{% url 'drug' %}">Drug Management</a></li>
+      <li><a href="{% url 'drug_class' %}">Drug Class</a></li>
+      <li><a href="{% url 'food' %}">Food</a></li>
+      <li><a href="{% url 'users' %}">Users</a></li>
+  </li>
+</div>

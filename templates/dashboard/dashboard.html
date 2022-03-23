@@ -1,0 +1,81 @@
+{% extends 'shared/logged.html' %} {% load static %}{% block page_content %}
+<div class="col dashboard">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card daily-card">
+        <div class="card-body">
+          <h1 class="stats-number">{{ hits.day.count }}</h1>
+          <p class"badge"><span class="badge rounded-pill bg-light text-dark">{% now 'DATE_FORMAT' %}</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card weekly-card">
+        <div class="card-body">
+            <h1 class="stats-number">{{ hits.week.count }}</h1>
+            <p>Current Week</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card monthly-card">
+        <div class="card-body">
+            <h1 class="stats-number">{{ hits.month.count }}</h1>
+            <p>Current Month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+{{week}}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="card"><div class="card-body">Monthly View</div></div>
+    </div>
+  </div>
+</div>
+  <script>
+
+    $(function () {
+
+      var $populationChart = $("#population-chart");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Population',
+                backgroundColor: 'blue',
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Population Bar Chart'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+{% endblock %}
